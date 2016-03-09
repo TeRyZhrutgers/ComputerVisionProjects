@@ -1,9 +1,10 @@
 % Perform edge detection with interpolation during non maximum suppression
 function CannyEdgeDetector()
     close all;  % Close figures
-    sigma = 1.4; % Gaussian filter sigma
-    highThresholdRatio = 0.33; % High threshold ratio
-    lowThresholdRatio = 0.15; % Low threshold ratio
+    saveImage = true;
+    sigma = 1; % Gaussian filter sigma
+    highThresholdRatio = 0.275; % High threshold ratio
+    lowThresholdRatio = 0.25; % Low threshold ratio OF THE high threshold
     
     % Change the current folder to the folder of this m-file.
     % Courtesy of Brett Shoelson
@@ -14,29 +15,49 @@ function CannyEdgeDetector()
     im = imread('Test_Photos\test1.jpg');
     figure; imshow(im);
     title('Original Image');
+    if saveImage
+        imwrite(im, 'Output_Photos\1_original.jpg');
+    end
     
     % Smooth with Gaussian 5x5 filter to reduce noise
     im = rgb2gray(im);
     figure; imshow(im);
     title('B/W Image');
+    if saveImage
+        imwrite(im, 'Output_Photos\2_bw.jpg');
+    end
     
     im = double(imgaussfilt(im,sigma));
     figure; imshow(NormalizeMatrix(im));
     title('Gaussian Filter');
+    if saveImage
+        imwrite(NormalizeMatrix(im), 'Output_Photos\3_gaussian.jpg');
+    end
     
     % Find the intensity gradient of the image
     Gx = SobelFilter(im, 'x');
     Gy = SobelFilter(im, 'y');
-    figure; imshow(NormalizeMatrix(Gx));
+    Gx = imgaussfilt(Gx,sigma);
+    Gy = imgaussfilt(Gy,sigma);
+    figure; imshow(abs(NormalizeMatrix(Gx)));
     title('Gx Sobel Filter');
-    figure; imshow(NormalizeMatrix(Gy));
+    if saveImage
+        imwrite(abs(NormalizeMatrix(Gx)), 'Output_Photos\4_gx_sobel.jpg');
+    end
+    figure; imshow(abs(NormalizeMatrix(Gy)));
     title('Gy Sobel Filter');
+    if saveImage
+        imwrite(abs(NormalizeMatrix(Gy)), 'Output_Photos\5_gy_sobel.jpg');
+    end
     
     % Find the magnitude of the gradient
     Gmag = sqrt(Gx.^2 + Gy.^2);
     angle = atan2(Gy,Gx)*180/pi;
     figure; imshow(NormalizeMatrix(Gmag));
     title('Gmag');
+    if saveImage
+        imwrite(NormalizeMatrix(Gmag), 'Output_Photos\6_gmag.jpg');
+    end
          
     % Perform non-maximum suppression using interpolation
     [h,w] = size(im);
@@ -97,6 +118,9 @@ function CannyEdgeDetector()
     Gmag = NormalizeMatrix(output);
     figure; imshow(Gmag);
     title('Non Maximum Suppression');
+    if saveImage
+        imwrite(Gmag, 'Output_Photos\7_non_maximum_suppression.jpg');
+    end
     
     % Perform double thresholding
     highThreshold = max(max(Gmag))*highThresholdRatio;
@@ -125,6 +149,9 @@ function CannyEdgeDetector()
     end
     figure; imshow(Gmag);
     title('Double Threshold'); 
+    if saveImage
+        imwrite(Gmag, 'Output_Photos\8_double_threshold.jpg');
+    end
     
     % Perform edge tracking by hysteresis
     set(0,'RecursionLimit',10000)
@@ -136,6 +163,9 @@ function CannyEdgeDetector()
     end
     figure; imshow(Gmag);
     title('Edge Tracking Before Clean Up'); 
+    if saveImage
+        imwrite(Gmag, 'Output_Photos\9_edge_tracking.jpg');
+    end
     
     % Remove the remaining weak edges that are not actually edges
     % and is noise instead
@@ -146,13 +176,16 @@ function CannyEdgeDetector()
     end
     figure; imshow(Gmag);
     title('Edge Tracking After Clean Up'); 
+    if saveImage
+        imwrite(Gmag, 'Output_Photos\10_final.jpg');
+    end
     
-    % MATLAB canny comparison
-    im = imread('Test_Photos/test1.jpg');
-    im = rgb2gray(im);
-    im = edge(im, 'canny');
-    figure; imshow(im);
-    title('MATLAB');
+%     % MATLAB canny comparison
+%     im = imread('Test_Photos/test1.jpg');
+%     im = rgb2gray(im);
+%     im = edge(im, 'canny');
+%     figure; imshow(im);
+%     title('MATLAB');
 end
 
 % Normalize matrix
@@ -176,8 +209,8 @@ end
 
 % Find weak edges that are connected to strong edges and set them to 1
 function[Gmag] = FindConnectedWeakEdges(Gmag, row, col)
-    for i = -2:1:2
-        for j = -2:1:2
+    for i = -3:1:3
+        for j = -3:1:3
             if (row+i > 0) && (col+j > 0) && (row+i < size(Gmag,1)) && ...
                     (col+j < size(Gmag,2)) % Make sure we are not out of bounds
                 if (Gmag(row+i,col+j) > 0) && (Gmag(row+i,col+j) < 1)

@@ -61,6 +61,8 @@ function ExtractColorByHSV()
     subplot(3,3,2);
     imshow(mask);
     title('Processed Image');
+    
+    imwrite(mask, 'processed_image.jpg');
 end
 
 % GetThresholdValues - Gets the threshold values for the different colors
@@ -74,7 +76,7 @@ function [hThresholdLow, hThresholdHigh, sThresholdLow, sThresholdHigh, ...
 			hThresholdHigh = 19/360;
 			sThresholdLow = 0.05;
 			sThresholdHigh = 1;
-			vThresholdLow = 0.65;    
+			vThresholdLow = 0;    
 			vThresholdHigh = 1;   
         case 'green'
             hThresholdLow = 70/360;
