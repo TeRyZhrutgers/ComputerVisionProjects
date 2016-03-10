@@ -188,11 +188,6 @@ function CannyEdgeDetector()
 %     title('MATLAB');
 end
 
-% Normalize matrix
-function[A] = NormalizeMatrix(A)
-    A = A/max(A(:));
-end
-
 % Perform sobel filter
 function[A] = SobelFilter(A, filterDirection)
     switch filterDirection
