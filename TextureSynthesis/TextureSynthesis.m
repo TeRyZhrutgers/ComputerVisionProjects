@@ -5,7 +5,7 @@ function TextureSynthesis()
     EPS = 0.1;    % Closest match threshold
     OUTPUT_SIZE = 100;  % Size of the output texture image
     
-    fileName = '3_grid.png';
+    fileName = '2_waves_large.jpg';
     imReal = imread(strcat('Test_Photos\',fileName));
     imReal = rgb2gray(imReal);
     
@@ -54,9 +54,11 @@ function TextureSynthesis()
             validMask = GenerateValidMask(textured, row, col, WINDOW_SIZE);
             
             % Get the best match, (match with the lowest ssd error)
-            [bestMatchRow,bestMatchCol] = FindBestMatch(gaussMask, validMask, imPatch, imSample, ...
-                WINDOW_SIZE);
-            im(row,col) = imSample(bestMatchRow,bestMatchCol); % Set im to the best match pixel
+            [bestMatchRows,bestMatchCols] = FindBestMatches(gaussMask, validMask, imPatch, imSample, ...
+                WINDOW_SIZE, EPS);
+            randIndex = randi(length(bestMatchRows));
+            im(row,col) = imSample(bestMatchRows(randIndex), ...
+                bestMatchCols(randIndex)); % Set im to one of the best match pixels
             textured(row,col) = 1; % Update textured matrix to keep track of what has been textured
             imshow(im);
         end
@@ -99,9 +101,10 @@ end
 
 % This function finds the best match. The algorithm only matches the known values and normalizes the
 % error by the total number of known pixels.
-function[bestMatchRow,bestMatchCol] = FindBestMatch(gaussMask, validMask, imPatch, imSample, ...
-    WINDOW_SIZE)
+function[bestMatchRows,bestMatchCols] = FindBestMatches(gaussMask, validMask, imPatch, imSample, ...
+    WINDOW_SIZE, EPS)
     [h,w] = size(imSample);
+    matches = zeros(h,w);
     minError = 8*255^2;
     
     % Loop through sample image to find the best match
@@ -109,17 +112,21 @@ function[bestMatchRow,bestMatchCol] = FindBestMatch(gaussMask, validMask, imPatc
         for j=floor(WINDOW_SIZE/2+1):w-floor(WINDOW_SIZE/2-1)
             imSamplePatch = GeneratePatch(imSample, i, j, WINDOW_SIZE);
             ssdError = SSDError(imSamplePatch,imPatch, gaussMask, validMask); % Get the new error
-            if ssdError < minError
-                minError = ssdError;
-                bestMatchRow = i;
-                bestMatchCol = j;
-            end
+%             if ssdError < minError
+%                 minError = ssdError;
+%                 bestMatchRow = i;
+%                 bestMatchCol = j;
+%             end
+            matches(i,j) = ssdError;
         end
     end
+%     [bestMatchRows,bestMatchCols] = find(matches < (1+EPS)*min(min(matches(matches>0))));
+    [bestMatchRows,bestMatchCols] = find(matches == min(min(matches(matches>0))));
+
 end
 
 % Calculate the normalized sum of squared differences error for the input patch and sample patch
-function[ssdError] = SSDError(imSamplePatch, imPatch, gaussMask, validMask)
+function[ssdError] = SSDError(imSamplePatch, imPatch, gaussMask, validMask, EPS)
     imSamplePatch(ceil(numel(imSamplePatch)/2)) = 0;    % Set the middle pixel to 0
     ssdError = (double(imSamplePatch) - double(imPatch)).^2;
     ssdError = NormalizeMatrix(ssdError);
