@@ -1,0 +1,275 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 3.2 Final//EN">
+<!-- saved from url=(0055)http://utam.gg.utah.edu/tomo03/03_mid/HTML/node103.html -->
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=windows-1252">
+<title>Erosion and Dilation</title>
+<meta name="description" content="Erosion and Dilation">
+<meta name="keywords" content="tomobk_new">
+<meta name="resource-type" content="document">
+<meta name="distribution" content="global">
+
+
+<meta name="Generator" content="jLaTeX2HTML v2002 JA patch-1.4">
+<meta http-equiv="Content-Style-Type" content="text/css">
+
+<link rel="STYLESHEET" href="./Erosion_and_Dilation_files/tomobk_new.css">
+
+<link rel="next" href="http://utam.gg.utah.edu/tomo03/03_mid/HTML/node104.html">
+<link rel="previous" href="http://utam.gg.utah.edu/tomo03/03_mid/HTML/node102.html">
+<link rel="up" href="http://utam.gg.utah.edu/tomo03/03_mid/HTML/node102.html">
+<link rel="next" href="http://utam.gg.utah.edu/tomo03/03_mid/HTML/node104.html">
+<style type="text/css"></style></head>
+
+<body>
+<!--Navigation Panel-->
+<a name="tex2html1942" href="http://utam.gg.utah.edu/tomo03/03_mid/HTML/node104.html">
+<img width="37" height="24" align="BOTTOM" border="0" alt="next" src="./Erosion_and_Dilation_files/next.png"></a> 
+<a name="tex2html1938" href="http://utam.gg.utah.edu/tomo03/03_mid/HTML/node102.html">
+<img width="26" height="24" align="BOTTOM" border="0" alt="up" src="./Erosion_and_Dilation_files/up.png"></a> 
+<a name="tex2html1932" href="http://utam.gg.utah.edu/tomo03/03_mid/HTML/node102.html">
+<img width="63" height="24" align="BOTTOM" border="0" alt="previous" src="./Erosion_and_Dilation_files/prev.png"></a> 
+<a name="tex2html1940" href="http://utam.gg.utah.edu/tomo03/03_mid/HTML/node1.html">
+<img width="65" height="24" align="BOTTOM" border="0" alt="contents" src="./Erosion_and_Dilation_files/contents.png"></a>  
+<br>
+<b> Next:</b> <a name="tex2html1943" href="http://utam.gg.utah.edu/tomo03/03_mid/HTML/node104.html">Set Theoretic Notation</a>
+<b> Up:</b> <a name="tex2html1939" href="http://utam.gg.utah.edu/tomo03/03_mid/HTML/node102.html">Erosion, Dilation and Skeletonization</a>
+<b> Previous:</b> <a name="tex2html1933" href="http://utam.gg.utah.edu/tomo03/03_mid/HTML/node102.html">Erosion, Dilation and Skeletonization</a>
+ &nbsp; <b>  <a name="tex2html1941" href="http://utam.gg.utah.edu/tomo03/03_mid/HTML/node1.html">Contents</a></b> 
+<br>
+<br>
+<!--End of Navigation Panel-->
+
+<h2><a name="SECTION05131000000000000000">
+Erosion and Dilation</a>
+</h2>
+
+<p>
+Erosion shrinks the boundary of a binary image to be smaller,
+while dilation expands the boundary to be larger.
+Usually the shrinkage or growth is by one pixel, but
+greater changes are possible with the recipe provided
+by the <!-- MATH
+ $structuring~element$
+ -->
+<img width="174" height="34" align="MIDDLE" border="0" src="./Erosion_and_Dilation_files/img532.png" alt="$structuring element$">.
+
+</p><p>
+The structuring element <img width="25" height="17" align="BOTTOM" border="0" src="./Erosion_and_Dilation_files/img533.png" alt="$M$"> is a square matrix
+of binary values that is applied to the image <img width="14" height="17" align="BOTTOM" border="0" src="./Erosion_and_Dilation_files/img70.png" alt="$I$"> with the
+following rule for the eroded output.
+
+</p><ul>
+<li>Erosion rule: replace the central point of the mask <img width="25" height="17" align="BOTTOM" border="0" src="./Erosion_and_Dilation_files/img533.png" alt="$M$"> with the <img width="76" height="18" align="BOTTOM" border="0" src="./Erosion_and_Dilation_files/img534.png" alt="$smallest$"> value
+of <img width="14" height="17" align="BOTTOM" border="0" src="./Erosion_and_Dilation_files/img70.png" alt="$I$"> covered by the mask. Assuming <img width="14" height="17" align="BOTTOM" border="0" src="./Erosion_and_Dilation_files/img70.png" alt="$I$"> is a binary
+image, then the mask centered at the boundary of <img width="14" height="17" align="BOTTOM" border="0" src="./Erosion_and_Dilation_files/img70.png" alt="$I$">
+will output zero because the mask
+overlaps both 0s (outside boundary) and 1s (inside boundary).
+</li>
+</ul>
+Examples of eroded objects are given
+in Figure&nbsp;<a href="http://utam.gg.utah.edu/tomo03/03_mid/HTML/node103.html#ch6.fig1l">11.2</a> for different structuring elements.
+
+<div align="CENTER"><a name="ch6.fig1l"></a><a name="6368"></a>
+<table>
+<caption align="BOTTOM"><strong>Figure 11.2:</strong>
+(Left) Structuring element, (middle) object,
+and (right) eroded object. 
+In this example, a filled (open) circle 
+corresponds to
+an intensity value of 1 (0)</caption>
+<tbody><tr><td><img width="453" height="275" border="0" src="./Erosion_and_Dilation_files/img535.png" alt="\begin{figure}\centering\psfig{figure=/uufs/geophys.utah.edu/common/utamfs/sjm/03tmp/jerry_pattern/fig/ch6.fig1l.ps,width=5.0in,height=3.0in,angle=-90}\end{figure}"></td></tr>
+</tbody></table>
+</div>
+Large structuring
+elements tend to smooth boundary features, small ones tend to preserve
+boundary shape, and shaped 
+structuring elements preserve similar appearing features in the boundary.
+
+<p>
+
+<br> 
+<!-- MATH
+ $\fbox{\setlength{\fboxsep}{2.5mm}\fbox{\parbox{11.2cm}
+{ Erosion can be defined (Solle, 2003) 
+by asking the question: 
+$Does~the~structuring~element$$~fit~inside~the~object?$Locations of the structuring element 
+$S$\  that give an affirmative answer
+yield the locus of points for the eroded set.
+If $S$\  is larger than the salt noise but smaller 
+than the object then the object will be preserved
+and the nosie will be eliminated.
+}}}$
+ -->
+<img width="541" height="181" align="MIDDLE" border="0" src="./Erosion_and_Dilation_files/img536.png" alt="\fbox{\setlength{\fboxsep}{2.5mm}\fbox{\parbox{11.2cm}
+{ Erosion can be defined ...
+...e object then the object will be preserved
+and the nosie will be eliminated.
+}}}">
+
+<br>
+</p><p>
+In a similar fashion, the rule for dilation is
+
+</p><ul>
+<li>Dilation rule: replace the central point of the mask <img width="25" height="17" align="BOTTOM" border="0" src="./Erosion_and_Dilation_files/img533.png" alt="$M$"> with the <img width="63" height="34" align="MIDDLE" border="0" src="./Erosion_and_Dilation_files/img537.png" alt="$largest$">
+value of <img width="14" height="17" align="BOTTOM" border="0" src="./Erosion_and_Dilation_files/img70.png" alt="$I$"> covered by the mask. If <img width="14" height="17" align="BOTTOM" border="0" src="./Erosion_and_Dilation_files/img70.png" alt="$I$"> is a binary
+image then this value just outside the boundary will be one because the mask
+centered one pixel outside  the boundary
+overlaps both 0s (outside boundary) and 1s (inside boundary).
+</li>
+</ul>
+Dilation examples are given
+in Figure&nbsp;<a href="http://utam.gg.utah.edu/tomo03/03_mid/HTML/node103.html#ch6.fig1la">11.3</a> for different structuring elements.
+
+<div align="CENTER"><a name="ch6.fig1la"></a><a name="6384"></a>
+<table>
+<caption align="BOTTOM"><strong>Figure 11.3:</strong>
+(Left) Structuring element, (middle) object,
+and (right) dilated object.
+In this example, a filled (open) circle 
+corresponds to
+an intensity value of 1 (0)</caption>
+<tbody><tr><td><img width="454" height="277" border="0" src="./Erosion_and_Dilation_files/img538.png" alt="\begin{figure}\centering\psfig{figure=/uufs/geophys.utah.edu/common/utamfs/sjm/0...
+.../jerry_pattern/fig/ch6.fig1la.ps,width=5.0in,height=3.0in,angle=-90}\end{figure}"></td></tr>
+</tbody></table>
+</div>
+
+<p>
+
+<br>
+<br> 
+<!-- MATH
+ $\fbox{\setlength{\fboxsep}{2.5mm}\fbox{\parbox{11.2cm}
+{ Dilation can be defined (Solle, 2003)
+by asking the question:
+$Does~the~structuring~element$$~hit~the~object?$Locations of the structuring element
+$S$\  that give an affirmative answer
+yield the locus of points for the dilated set.
+If $S$\  is larger than the $pepper$\  noise but smaller
+than the object then the object will be preserved
+and the nosie will be eliminated.
+}}}$
+ -->
+<img width="541" height="181" align="MIDDLE" border="0" src="./Erosion_and_Dilation_files/img539.png" alt="\fbox{\setlength{\fboxsep}{2.5mm}\fbox{\parbox{11.2cm}
+{ Dilation can be defined...
+...e object then the object will be preserved
+and the nosie will be eliminated.
+}}}">
+
+<br>
+<br>
+</p><p>
+The MATLAB commands for a simple binary erosion code is
+below.
+</p><pre>function [ie]=jmerode(I,M)
+% Erode binary image I with a 3x3 structure mask M
+sum1=sum(M(:));M=M/sum1;
+ie=conv2(I,M,'same');
+ie=fix(ie+.001)==1;
+</pre>
+This is a crude version of the more sophisticated MATLAB code
+given by <!-- MATH
+ $\bf imerode(I,M)$
+ -->
+<img width="131" height="37" align="MIDDLE" border="0" src="./Erosion_and_Dilation_files/img540.png" alt="$\bf imerode(I,M)$">,
+but nevertheless
+the crude code gives the eroded 
+rectangles seen in Figure&nbsp;<a href="http://utam.gg.utah.edu/tomo03/03_mid/HTML/node103.html#ch6.fig4a">11.4</a>
+for the structuring mask <img width="25" height="17" align="BOTTOM" border="0" src="./Erosion_and_Dilation_files/img533.png" alt="$M$"> 
+<br>
+<div align="CENTER"><a name="ch6.eq2aa"></a>
+<!-- MATH
+ \begin{eqnarray}
+{\bf M} \rightarrow \left|
+          \begin{array}{ccc}
+            {\displaystyle 1 } &
+            {\displaystyle 1 } &
+            {\displaystyle 1 }
+            \\[{0.5cm}]
+            {\displaystyle 1 }&
+            {\displaystyle 1 } &
+            {\displaystyle 1 }
+            \\[{0.5cm}]
+            {\displaystyle 1 } &
+            {\displaystyle 1 }&
+            {\displaystyle 1 }
+          \end{array}
+        \right| .
+\end{eqnarray}
+ -->
+<table align="CENTER" cellpadding="0" width="100%">
+<tbody><tr valign="MIDDLE"><td nowrap="" align="RIGHT"><img width="150" height="132" align="MIDDLE" border="0" src="./Erosion_and_Dilation_files/img541.png" alt="$\displaystyle {\bf M} \rightarrow \left\vert
+\begin{array}{ccc}
+{\displaystyle ...
+...playstyle 1 } &amp;
+{\displaystyle 1 }&amp;
+{\displaystyle 1 }
+\end{array}\right\vert .$"></td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+<td width="10" align="RIGHT">
+(11.1)</td></tr>
+</tbody></table></div>
+<br clear="ALL"><p></p>
+
+<div align="CENTER"><a name="ch6.fig4a"></a><a name="6420"></a>
+<table>
+<caption align="BOTTOM"><strong>Figure 11.4:</strong>
+(left) Rectangular object eroded (middle)
+once and (right) twice.</caption>
+<tbody><tr><td><img width="571" height="335" border="0" src="./Erosion_and_Dilation_files/img542.png" alt="\begin{figure}\centering\psfig{figure=/uufs/geophys.utah.edu/common/utamfs/sjm/03tmp/jerry_pattern/fig/ch6.fig4a.ps,width=5.0in,height=3.0in}\end{figure}"></td></tr>
+</tbody></table>
+</div>
+
+<p>
+The MATLAB commands for a simple binary dilation code is
+below.
+</p><pre>function [ie]=jmdilate(I,f)
+% Dilate boundary of binary image I by using 3x3
+% structure mask f
+ie=conv2(I,f,'same');
+ie=ie+.001&gt;=1;
+</pre>
+This is a crude version of the more sophisticated MATLAB code
+given by <!-- MATH
+ $\bf imdilate(I,f)$
+ -->
+<img width="121" height="37" align="MIDDLE" border="0" src="./Erosion_and_Dilation_files/img543.png" alt="$\bf imdilate(I,f)$">,
+but the crude code still is effective as seen
+by the dilated rectangles seen in Figure&nbsp;<a href="http://utam.gg.utah.edu/tomo03/03_mid/HTML/node103.html#ch6.fig4b">11.5</a>.
+Again, the structure matrix is that in equation&nbsp;<a href="http://utam.gg.utah.edu/tomo03/03_mid/HTML/node104.html#ch6.eq2aa">11.4</a>.
+
+<div align="CENTER"><a name="ch6.fig4b"></a><a name="6429"></a>
+<table>
+<caption align="BOTTOM"><strong>Figure 11.5:</strong>
+(left) Rectangular object dilated (middle)
+once and (right) twice.</caption>
+<tbody><tr><td><img width="571" height="335" border="0" src="./Erosion_and_Dilation_files/img544.png" alt="\begin{figure}\centering\psfig{figure=/uufs/geophys.utah.edu/common/utamfs/sjm/03tmp/jerry_pattern/fig/ch6.fig4b.ps,width=5.0in,height=3.0in}\end{figure}"></td></tr>
+</tbody></table>
+</div>
+
+<p>
+</p><div align="CENTER">
+
+</div><hr>
+<!--Navigation Panel-->
+<a name="tex2html1942" href="http://utam.gg.utah.edu/tomo03/03_mid/HTML/node104.html">
+<img width="37" height="24" align="BOTTOM" border="0" alt="next" src="./Erosion_and_Dilation_files/next.png"></a> 
+<a name="tex2html1938" href="http://utam.gg.utah.edu/tomo03/03_mid/HTML/node102.html">
+<img width="26" height="24" align="BOTTOM" border="0" alt="up" src="./Erosion_and_Dilation_files/up.png"></a> 
+<a name="tex2html1932" href="http://utam.gg.utah.edu/tomo03/03_mid/HTML/node102.html">
+<img width="63" height="24" align="BOTTOM" border="0" alt="previous" src="./Erosion_and_Dilation_files/prev.png"></a> 
+<a name="tex2html1940" href="http://utam.gg.utah.edu/tomo03/03_mid/HTML/node1.html">
+<img width="65" height="24" align="BOTTOM" border="0" alt="contents" src="./Erosion_and_Dilation_files/contents.png"></a>  
+<br>
+<b> Next:</b> <a name="tex2html1943" href="http://utam.gg.utah.edu/tomo03/03_mid/HTML/node104.html">Set Theoretic Notation</a>
+<b> Up:</b> <a name="tex2html1939" href="http://utam.gg.utah.edu/tomo03/03_mid/HTML/node102.html">Erosion, Dilation and Skeletonization</a>
+<b> Previous:</b> <a name="tex2html1933" href="http://utam.gg.utah.edu/tomo03/03_mid/HTML/node102.html">Erosion, Dilation and Skeletonization</a>
+ &nbsp; <b>  <a name="tex2html1941" href="http://utam.gg.utah.edu/tomo03/03_mid/HTML/node1.html">Contents</a></b> 
+<!--End of Navigation Panel-->
+<address>
+Sheng Jian Ming
+2003-10-21
+</address>
+
+
+</body></html>
