@@ -1,11 +1,12 @@
 function TextureSynthesis()
     close all;
-    WINDOW_SIZE = 11;    % Neighbor window size
+    WINDOW_SIZE = 15;    % Neighbor window size
     SIGMA = 1.5;    % Gaussian kernal sigma
     EPS = 0.1;    % Closest match threshold
-    OUTPUT_SIZE = 100;  % Size of the output texture image
+    OUTPUT_SIZE = 10;  % Size of the output texture image
     
-    imReal = imread('Test_Photos\3_grid.png');
+    fileName = '3_grid.png';
+    imReal = imread(strcat('Test_Photos\',fileName));
     imReal = rgb2gray(imReal);
     
     imshow(imReal);
@@ -36,7 +37,7 @@ function TextureSynthesis()
     se = strel('square',3);
     borderMask = imdilate(textured,se)-textured;
     
-    while ~isempty(borderMask)  % While there are still border pixels
+    while sum(sum(borderMask))~=0  % While there are still border pixels
         [borderRows,borderCols] = find(borderMask);
         % Loop through the border pixels
         for index=1:length(borderRows)
@@ -52,6 +53,9 @@ function TextureSynthesis()
         end
         borderMask = imdilate(textured,se)-textured;
     end
+    
+    strcat('Output_Photos\',fileName);
+    imwrite(im,strcat('Output_Photos\',fileName));
 end
 
 function[patch] = GeneratePatch(im, row, col, WINDOW_SIZE)
