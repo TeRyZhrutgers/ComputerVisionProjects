@@ -1,11 +1,11 @@
 function TextureSynthesis()
     close all;
-    WINDOW_SIZE = 15;    % Neighbor window size
+    WINDOW_SIZE = 5;    % Neighbor window size
     SIGMA = 1.5;    % Gaussian kernal sigma
     EPS = 0.1;    % Closest match threshold
     OUTPUT_SIZE = 100;  % Size of the output texture image
     
-    fileName = '2_waves_large.jpg';
+    fileName = '5_brick.jpg';
     imReal = imread(strcat('Test_Photos\',fileName));
     imReal = rgb2gray(imReal);
     
@@ -56,9 +56,10 @@ function TextureSynthesis()
             % Get the best match, (match with the lowest ssd error)
             [bestMatchRows,bestMatchCols] = FindBestMatches(gaussMask, validMask, imPatch, imSample, ...
                 WINDOW_SIZE, EPS);
-            randIndex = randi(length(bestMatchRows));
-            im(row,col) = imSample(bestMatchRows(randIndex), ...
-                bestMatchCols(randIndex)); % Set im to one of the best match pixels
+%             randIndex = randi(length(bestMatchRows));
+%             im(row,col) = imSample(bestMatchRows(randIndex), ...
+%                 bestMatchCols(randIndex)); % Set im to one of the best match pixels
+            im(row,col) = imSample(bestMatchRows,bestMatchCols);
             textured(row,col) = 1; % Update textured matrix to keep track of what has been textured
             imshow(im);
         end
@@ -112,16 +113,16 @@ function[bestMatchRows,bestMatchCols] = FindBestMatches(gaussMask, validMask, im
         for j=floor(WINDOW_SIZE/2+1):w-floor(WINDOW_SIZE/2-1)
             imSamplePatch = GeneratePatch(imSample, i, j, WINDOW_SIZE);
             ssdError = SSDError(imSamplePatch,imPatch, gaussMask, validMask); % Get the new error
-%             if ssdError < minError
-%                 minError = ssdError;
-%                 bestMatchRow = i;
-%                 bestMatchCol = j;
-%             end
+            if ssdError < minError
+                minError = ssdError;
+                bestMatchRows = i;
+                bestMatchCols = j;
+            end
             matches(i,j) = ssdError;
         end
     end
 %     [bestMatchRows,bestMatchCols] = find(matches < (1+EPS)*min(min(matches(matches>0))));
-    [bestMatchRows,bestMatchCols] = find(matches == min(min(matches(matches>0))));
+%     [bestMatchRows,bestMatchCols] = find(matches == min(min(matches(matches>0))));
 
 end
 
