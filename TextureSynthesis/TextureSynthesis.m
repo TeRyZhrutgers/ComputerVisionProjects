@@ -1,6 +1,6 @@
 function TextureSynthesis()
     close all;
-    WINDOW_SIZE = 5;    % Neighbor window size
+    WINDOW_SIZE = 11;    % Neighbor window size
     SIGMA = 1.5;    % Gaussian kernal sigma
     EPS = 0.1;    % Closest match threshold
     OUTPUT_SIZE = 100;  % Size of the output texture image
