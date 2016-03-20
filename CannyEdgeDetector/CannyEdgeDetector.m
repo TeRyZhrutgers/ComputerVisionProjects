@@ -125,10 +125,10 @@ function CannyEdgeDetector()
     % Perform double thresholding
     highThreshold = max(max(Gmag))*highThresholdRatio;
     lowThreshold = highThreshold*lowThresholdRatio;
-    strongEdgesRow = zeros(1,h); % Keep track of the strong edge row index
-    strongEdgesCol = zeros(1,w); % Keep track of the strong edge col index
-    weakEdgesRow = zeros(1,h);  % Keep track of the weak edge row index
-    weakEdgesCol = zeros(1,w);  % Keep track of the weak edge col index
+    strongEdgesRow = zeros(1,h*w); % Keep track of the strong edge row index
+    strongEdgesCol = zeros(1,h*w); % Keep track of the strong edge col index
+    weakEdgesRow = zeros(1,h*w);  % Keep track of the weak edge row index
+    weakEdgesCol = zeros(1,h*w);  % Keep track of the weak edge col index
     strongIndex = 1;
     weakIndex = 1;
     for i=2:h-1 % row
