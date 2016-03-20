@@ -5,7 +5,7 @@ function TextureSynthesis()
     EPS = 0.1;    % Closest match threshold
     OUTPUT_SIZE = 100;  % Size of the output texture image
     
-    fileName = '5_brick.jpg';
+    fileName = '6_egypt.png';
     imReal = imread(strcat('Test_Photos\',fileName));
     imReal = rgb2gray(imReal);
     
