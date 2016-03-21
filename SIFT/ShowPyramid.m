@@ -15,8 +15,9 @@ function ShowPyramid(pyramid)
         end
     end 
     
+    figure;
     for i=1:length(pyramidImage)
-        figure;
+        subplot(length(pyramidImage),1,i);
         imshow(pyramidImage{i});
     end
 end
